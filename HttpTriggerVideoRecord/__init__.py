@@ -23,6 +23,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     vidName = "13Apr21test1"
     outpath = f"/tmp/{vidName}.mp4"
     ffmpegCommand = f'./ffmpeg -t 60 -f x11grab -s 1280x1024  -r 25 -i :0.0+0,0 {outpath}'
+    logging.info(f"ffmpegCommand: {ffmpegCommand}")
     result = os.popen(ffmpegCommand).read()
     logging.info("command run")
 
