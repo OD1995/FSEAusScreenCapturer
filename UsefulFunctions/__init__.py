@@ -9,7 +9,7 @@ def get_driver():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome("/usr/local/bin/chromedriver", chrome_options=chrome_options)
-
+    return driver
 
 def run_sql_command(
     sqlQuery,
