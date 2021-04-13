@@ -65,8 +65,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     )
     ## This is a tiny and pointless change
     logging.info("command run")
+    driver.quit()
     return func.HttpResponse(
              currentTime,
              status_code=200
     )
-    driver.quit()
