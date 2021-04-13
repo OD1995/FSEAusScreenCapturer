@@ -14,7 +14,7 @@ from UsefulFunctions import (
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     ## Get driver
-    driver = get_driver
+    driver = get_driver()
     logging.info("Driver created")
     ## Go to time.is and get the time
     driver.get("https://time.is/")

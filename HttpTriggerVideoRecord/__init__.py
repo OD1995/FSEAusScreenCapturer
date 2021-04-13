@@ -30,7 +30,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         connection_string=os.getenv("fsecustomvisionimagesCS")
     )
     block_blob_service.create_blob_from_path(
-                container_name=con"test",
+                container_name="test",
                 blob_name=vidName,
                 file_path=outpath,
                 content_settings=ContentSettings(
