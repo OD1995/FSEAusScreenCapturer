@@ -4,6 +4,7 @@ from UsefulFunctions import (
 )
 import os
 from azure.storage.blob import BlockBlobService
+from azure.storage.blob.models import ContentSettings
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import azure.functions as func
