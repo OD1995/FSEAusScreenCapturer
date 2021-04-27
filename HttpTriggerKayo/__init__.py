@@ -13,7 +13,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     endUTC_dt = datetime.strptime(endUTC,dateFormat)
     sport = req.params.get('sport')
     channel = req.params.get('channel')
-
+    ## change 27Ap21 14:26
     get_kayo_screenshots(
         startUTC_dt,
         endUTC_dt,

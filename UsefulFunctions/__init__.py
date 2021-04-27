@@ -10,6 +10,7 @@ import threading
 from azure.storage.blob import BlockBlobService
 import logging
 import os
+from selenium.common.exceptions import TimeoutException
 
 def get_driver():
     ## Create the driver with options
@@ -51,6 +52,8 @@ def get_driver_and_login_to_kayo():
     ## Navigate to Kayo website
     driver.get('https://kayosports.com.au/')
     logging.info("navigated to website")
+    ## Create BBS
+    bbs = get_bbs()
     ## Wait till login button is clickable then click it
     # counter=0
     # while counter < 1:
@@ -59,16 +62,29 @@ def get_driver_and_login_to_kayo():
     #         counter=1
     #     except:
     #         counter=0
-    WebDriverWait(
-        driver,
-        30
-    ).until(
-        EC.element_to_be_clickable(
-            (
-                By.XPATH ,
-                "//button[text()='Sign in']"
-            ))
-        ).click()
+    dtA = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    bbs.create_blob_from_text(container_name="test",
+                            blob_name=f"A {dtA}.txt",
+                            text=driver.page_source
+    )
+    try:
+        WebDriverWait(
+            driver,
+            180
+        ).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH ,
+                    "//button[text()='Sign in']"
+                ))
+            ).click()
+    except TimeoutException:
+        dtB = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+        bbs.create_blob_from_text(container_name="test",
+                                blob_name=f"B {dtB}.txt",
+                                text=driver.page_source
+        )
+        raise ValueError("fail")
     logging.info("sign in button clicked")
     sleep(5)
     ## Login
@@ -238,13 +254,17 @@ def get_kayo_screenshots(
     driver.find_element_by_css_selector("[aria-label='Toggle Fullscreen']").click()
     logging.info("full screen turned on")
     ## Create BBS
-    block_blob_service = BlockBlobService(
-        connection_string=os.getenv("fsecustomvisionimagesCS")
-    )
+    block_blob_service = get_bbs()
     take_screenshots(
         startUTC_dt,
         endUTC_dt,
         progID,
         driver,
         block_blob_service
+    )
+
+def get_bbs():
+
+    return BlockBlobService(
+        connection_string=os.getenv("fsecustomvisionimagesCS")
     )
