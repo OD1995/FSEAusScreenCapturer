@@ -63,6 +63,7 @@ print(len(uniqueInfoList))
 dtFormat2 = "%Y-%m-%dT%H:%M:%SZ"
 
 import pandas as pd;df=pd.DataFrame(uniqueInfoList);df.to_clipboard()
+import pandas as pd;df=pd.DataFrame(infoList);df.to_clipboard()
 
 #for b in uniqueInfoList:
 #    tt = datetime.strptime(b['transmissionTime'],dtFormat2)

@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import pyodbc
 from time import sleep, time
 from datetime import datetime, timedelta
@@ -47,14 +50,26 @@ def get_driver_and_login_to_kayo():
     logging.info("driver got")
     ## Navigate to Kayo website
     driver.get('https://kayosports.com.au/')
+    logging.info("navigated to website")
     ## Wait till login button is clickable then click it
-    counter=0
-    while counter < 1:
-        try:
-            driver.find_element_by_css_selector('.gGZPNT').click()
-            counter=1
-        except:
-            counter=0
+    # counter=0
+    # while counter < 1:
+    #     try:
+    #         driver.find_element_by_css_selector('.gGZPNT').click()
+    #         counter=1
+    #     except:
+    #         counter=0
+    WebDriverWait(
+        driver,
+        30
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH ,
+                "//button[text()='Sign in']"
+            ))
+        ).click()
+    logging.info("sign in button clicked")
     sleep(5)
     ## Login
     driver.find_element_by_xpath("//input[@name='email']").send_keys('futuressport@gmail.com')
@@ -63,14 +78,24 @@ def get_driver_and_login_to_kayo():
     sleep(3)
     logging.info("logged in")
     ## Select the Futures account
-    counter=0
-    while counter < 1: #Select account once clickable
-        try:
-            # driver.find_element_by_css_selector('.IrALQ:nth-child(1) .fulUIE').click()
-            driver.find_element_by_xpath("//span[text()='Futures']").click()
-            counter=1
-        except:
-            counter=0
+    # counter=0
+    # while counter < 1: #Select account once clickable
+    #     try:
+    #         # driver.find_element_by_css_selector('.IrALQ:nth-child(1) .fulUIE').click()
+    #         driver.find_element_by_xpath("//span[text()='Futures']").click()
+    #         counter=1
+    #     except:
+    #         counter=0
+    WebDriverWait(
+        driver,
+        30
+    ).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH ,
+                "//span[text()='Futures']"
+            ))
+        ).click()
     sleep(6)
     logging.info("account chosen")
     
