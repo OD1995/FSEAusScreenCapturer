@@ -1,5 +1,5 @@
 import logging
-
+from datetime import datetime
 import azure.functions as func
 from UsefulFunctions import (
     get_driver,
