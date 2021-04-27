@@ -11,7 +11,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     driver = get_driver()
-    driver.get("https://www.iplocation.net/")
+    # driver.get("https://www.iplocation.net/")
+    driver.get("https://kayosports.com.au/")
     bbs = get_bbs()
     dtGCI = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     bbs.create_blob_from_text(container_name="test",
